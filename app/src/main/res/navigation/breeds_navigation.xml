@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/breeds_navigation"
+    app:startDestination="@id/BreedsFragment">
+
+    <fragment
+        android:id="@+id/BreedsFragment"
+        android:name="com.debin.challengechip.presentation.breeds.BreedsFragment"
+        android:label="fragment_dog_breeds"
+        tools:layout="@layout/fragment_breeds" >
+        <action
+            android:id="@+id/action_BreedsFragment_to_breedDetailsFragment"
+            app:destination="@id/breedDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/breedDetailsFragment"
+        android:name="com.debin.challengechip.presentation.dogs.BreedDetailsFragment"
+        android:label="fragment_breed_details"
+        tools:layout="@layout/fragment_breed_details" >
+        <action
+            android:id="@+id/action_breedDetailsFragment_to_BreedsFragment"
+            app:destination="@id/BreedsFragment" />
+        <argument
+            android:name="breedName"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+</navigation>

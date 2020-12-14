@@ -1,0 +1,3 @@
+include ':breeds'
+include ':app'
+rootProject.name = "ChallengeChip"

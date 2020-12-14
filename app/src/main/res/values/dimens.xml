@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen8">8dp</dimen>
+    <dimen name="dimen16">16dp</dimen>
+    <dimen name="dimen20sp">20sp</dimen>
+    <dimen name="dimen200">200dp</dimen>
+</resources>
