@@ -15,7 +15,7 @@ import io.reactivex.observers.DisposableSingleObserver
 private const val TAG = "BreedsViewModel"
 
 @OpenForTesting
-open class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
+class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
 
     val progress = MutableLiveData<Int>()
     val loadingError = MutableLiveData<String>()
@@ -38,12 +38,7 @@ open class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
         getBreeds.execute(BreedSubscriber())
     }
 
-//    fun getDogs(breedName : String) {
-//        progress.value = 0
-//        getDogs.execute(DogsSubscriber(),breedName)
-//    }
-
-    open private inner class BreedSubscriber : DisposableSingleObserver<DogBreed>() {
+    private inner class BreedSubscriber : DisposableSingleObserver<DogBreed>() {
         override fun onSuccess(breeds: DogBreed) {
            _breeds.value = Resource.Success(breeds.message)
             Log.i(TAG, "Success")
@@ -58,27 +53,10 @@ open class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
         }
     }
 
-//    private inner class DogsSubscriber : DisposableSingleObserver<Dog>() {
-//        override fun onSuccess(dog: Dog) {
-//            _dogs.postValue(Resource.Success(dog.message))
-//            Log.i(TAG, "Success")
-//            progress.value = 8
-//        }
-//
-//        override fun onError(e: Throwable) {
-//            _dogs.postValue(Resource.Error(e.message))
-//            loadingError.postValue(e.message)
-//            Log.i(TAG, "Failure")
-//            progress.value = 8
-//        }
-//
-//    }
-
     override fun onCleared() {
         super.onCleared()
-        Log.i(TAG, "Distroy")
+        Log.i(TAG, "Destroy")
         getBreeds.dispose()
-       // getDogs.dispose()
     }
 
 

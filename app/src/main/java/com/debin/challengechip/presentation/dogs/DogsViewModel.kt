@@ -14,7 +14,7 @@ import io.reactivex.observers.DisposableSingleObserver
 private const val TAG = "DogsViewModel"
 
 @OpenForTesting
-open class DogsViewModel(private val getDogs: GetDogs) : ViewModel() {
+class DogsViewModel(private val getDogs: GetDogs) : ViewModel() {
 
     private val _dogs = MutableLiveData<Resource<List<String>>>()
     val dogs : LiveData<Resource<List<String>>>
