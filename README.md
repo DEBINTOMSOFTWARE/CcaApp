@@ -1,4 +1,4 @@
-# ChallengeChip
+# CleanCodeArchitecture 
 
 The App consists of two screens with below specifications
 Specification
