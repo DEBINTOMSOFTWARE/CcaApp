@@ -13,7 +13,7 @@ Scenario 2: Viewing pictures of breed Given I have launched the app When I selec
 The App was developed in MVVM architecture with android jetpack components to make the project lifecycle aware by following the clean code architecture and added the test cases
 for data layer, interactors layer, framworklayer and presentation layer. And also added ViewModel testing, fragment , navigation testing.
 
-Technologies Used for ChallengeChip
+Technologies Used for CcaApp
 
 1) Kotlin (Clean code architecture)
 2) MVVM architecture
