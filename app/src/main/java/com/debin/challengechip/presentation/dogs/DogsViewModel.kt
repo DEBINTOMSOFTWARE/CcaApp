@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.debin.challengechip.breeds.domain.Dog
 import com.debin.challengechip.breeds.domain.utils.OpenForTesting
@@ -14,23 +15,46 @@ import io.reactivex.observers.DisposableSingleObserver
 private const val TAG = "DogsViewModel"
 
 @OpenForTesting
-class DogsViewModel(private val getDogs: GetDogs) : ViewModel() {
+class DogsViewModel(private val getDogs: GetDogs,
+                    private val state: SavedStateHandle) : ViewModel() {
 
     private val _dogs = MutableLiveData<Resource<List<String>>>()
     val dogs : LiveData<Resource<List<String>>>
         get() = _dogs
     val progress = MutableLiveData<Int>()
     val loadingError = MutableLiveData<String>()
+    var _savedBreedName = MutableLiveData<String>()
+    val savedBreedName : LiveData<String>
+    get() = _savedBreedName
+
+
+
 
     init {
         progress.value = 8
         loadingError.value = ""
         println(TAG + "init is called")
+        _savedBreedName.value = ""
+        println("$TAG ::  saved breed name init :: ${_savedBreedName.value}")
+    }
+
+    companion object {
+        private val BREED_NAME = "breedName"
     }
 
     fun getDogs(breedName : String) {
         progress.value = 0
+        saveCurrentBreed(breedName)
         getDogs.execute(DogsSubscriber(),breedName)
+        getCurrentBreed()
+    }
+
+    private fun saveCurrentBreed(breedName: String) {
+        state[BREED_NAME] = breedName
+    }
+
+    private fun getCurrentBreed()  {
+        _savedBreedName = state.getLiveData<String>(BREED_NAME)
     }
 
     private inner class DogsSubscriber : DisposableSingleObserver<Dog>() {
@@ -50,7 +74,6 @@ class DogsViewModel(private val getDogs: GetDogs) : ViewModel() {
     }
 
     override fun onCleared() {
-        super.onCleared()
         getDogs.dispose()
     }
 }

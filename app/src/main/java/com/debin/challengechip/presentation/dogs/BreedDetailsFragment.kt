@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.recyclerview.widget.GridLayoutManager
 import com.debin.challengechip.R
 import com.debin.challengechip.databinding.FragmentBreedDetailsBinding
@@ -56,6 +57,7 @@ class BreedDetailsFragment : Fragment() {
         }
     }
 
+
     private fun observeData() {
        viewModel.dogs.observe(viewLifecycleOwner, Observer { result ->
            when(result) {
@@ -63,10 +65,7 @@ class BreedDetailsFragment : Fragment() {
 
                }
                is Resource.Success -> {
-
-
                        dogsAdapter.updateDogs(result.result)
-
                }
                is Resource.Error -> {
 
@@ -76,7 +75,12 @@ class BreedDetailsFragment : Fragment() {
     }
 
     private fun getDogs(breedName : String) {
-        viewModel.getDogs(breedName)
+        viewModel.savedBreedName.observe(viewLifecycleOwner, Observer {
+            println("$TAG :: value of savedBreed :: $it")
+            if(it.isEmpty()) {
+                viewModel.getDogs(breedName)
+            }
+        })
     }
 
     private fun bindView() {

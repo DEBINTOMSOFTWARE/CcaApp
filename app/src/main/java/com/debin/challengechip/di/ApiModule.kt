@@ -20,6 +20,7 @@ val apiModule = module {
     fun provideApi() : ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build().create(ApiService::class.java)

@@ -41,7 +41,6 @@ open class BreedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
            bindView()
            initViews()
-           //getBreeds()
            observeData()
     }
 
@@ -66,10 +65,6 @@ open class BreedsFragment : Fragment() {
                 }
             }
         })
-    }
-
-    private fun getBreeds() {
-        viewModel.getBreeds()
     }
 
     private fun bindView() {

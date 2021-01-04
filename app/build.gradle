@@ -71,6 +71,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelLifeCycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"
 
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
@@ -80,6 +81,8 @@ dependencies {
     testImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
+
+
 
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.arch.core:core-runtime:$archCoreVersion"
@@ -95,7 +98,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
-
     androidTestImplementation "androidx.navigation:navigation-testing:$navVersion"
 
     implementation 'androidx.fragment:fragment:1.1.0-alpha01'
