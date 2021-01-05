@@ -8,6 +8,6 @@ import com.debin.challengechip.framework.executor.UiThread
 import org.koin.dsl.module
 
 val useCasesModule = module {
-    single { GetBreeds(get(), JobExecutor(), UiThread()) }
+    factory { GetBreeds(get(), JobExecutor(), UiThread()) }
     factory { GetDogs(get(), JobExecutor(), UiThread()) }
 }

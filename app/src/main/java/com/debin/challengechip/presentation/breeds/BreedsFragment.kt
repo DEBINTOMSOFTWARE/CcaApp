@@ -14,6 +14,7 @@ import com.debin.challengechip.R
 import com.debin.challengechip.breeds.domain.utils.OpenForTesting
 import com.debin.challengechip.databinding.FragmentBreedsBinding
 import com.debin.challengechip.framework.utils.Resource
+import com.debin.challengechip.framework.utils.ResponseListener
 import kotlinx.android.synthetic.main.fragment_breeds.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.random.Random
@@ -21,7 +22,7 @@ import kotlin.random.Random
 private const val TAG = "BreedsFragment"
 
 @OpenForTesting
-open class BreedsFragment : Fragment() {
+open class BreedsFragment : Fragment(), ResponseListener {
 
     private lateinit var breedAdapter: BreedAdapter
     private val viewModel: BreedsViewModel by viewModel()
@@ -60,8 +61,15 @@ open class BreedsFragment : Fragment() {
     private fun observeData() {
         viewModel.breeds.observe(viewLifecycleOwner, Observer {result ->
             when(result) {
+                is Resource.Loading -> {
+                   showProgressBar()
+                }
                 is Resource.Success -> {
                     breedAdapter.updateBreed(result.result)
+                    hideProgressBar()
+                }
+                is Resource.Error -> {
+                   hideProgressBar()
                 }
             }
         })
@@ -70,10 +78,27 @@ open class BreedsFragment : Fragment() {
     private fun bindView() {
         binding.breedViewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.responseListener = this
     }
 
     private fun hideProgressBar() {
         progressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun onLoading() {
+       showProgressBar()
+    }
+
+    override fun onSuccess() {
+        hideProgressBar()
+    }
+
+    override fun onFailure(errorMessage: String) {
+       hideProgressBar()
     }
 
 
