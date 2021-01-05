@@ -2,6 +2,7 @@ package com.debin.challengechip.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.debin.challengechip.breeds.domain.Dog
 import com.debin.challengechip.breeds.interactors.GetDogs
 import com.debin.challengechip.framework.utils.Resource
@@ -23,6 +24,7 @@ import java.lang.RuntimeException
 @RunWith(JUnit4::class)
 class DogsViewModelTest {
     private lateinit var mockGetDogsUseCase: GetDogs
+    private lateinit var state : SavedStateHandle
     private lateinit var dogsViewModel : DogsViewModel
 
     @get:Rule
@@ -31,7 +33,8 @@ class DogsViewModelTest {
     @Before
     fun setUp() {
         mockGetDogsUseCase = mock()
-        dogsViewModel = DogsViewModel(mockGetDogsUseCase)
+        state = SavedStateHandle()
+        dogsViewModel = DogsViewModel(mockGetDogsUseCase, state)
     }
 
     @Test

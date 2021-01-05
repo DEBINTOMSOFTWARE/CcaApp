@@ -15,7 +15,7 @@ import io.reactivex.observers.DisposableSingleObserver
 private const val TAG = "DogsViewModel"
 
 @OpenForTesting
-class DogsViewModel(private val getDogs: GetDogs,
+open class DogsViewModel(private val getDogs: GetDogs,
                     private val state: SavedStateHandle) : ViewModel() {
 
     private val _dogs = MutableLiveData<Resource<List<String>>>()
@@ -42,7 +42,7 @@ class DogsViewModel(private val getDogs: GetDogs,
         private val BREED_NAME = "breedName"
     }
 
-    fun getDogs(breedName : String) {
+    open fun getDogs(breedName : String) {
         progress.value = 0
         saveCurrentBreed(breedName)
         getDogs.execute(DogsSubscriber(),breedName)
