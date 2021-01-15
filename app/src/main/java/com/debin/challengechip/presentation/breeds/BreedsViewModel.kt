@@ -31,11 +31,9 @@ class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
      init {
          loadingError.value = ""
          getBreeds()
-         println(TAG + "init is called")
     }
 
     fun getBreeds() {
-        println(TAG + "getBreeds")
         getBreeds.execute(BreedSubscriber())
     }
 
@@ -43,19 +41,15 @@ class BreedsViewModel(private val getBreeds: GetBreeds) : ViewModel() {
     private inner class BreedSubscriber : DisposableSingleObserver<DogBreed>() {
         override fun onSuccess(breeds: DogBreed) {
            _breeds.value = Resource.Success(breeds.message)
-            Log.i(TAG, "Success")
         }
 
         override fun onError(e: Throwable) {
             _breeds.value = Resource.Error(e.message)
             loadingError.postValue(e.message)
-            Log.i(TAG, "Failure")
         }
     }
 
     override fun onCleared() {
-        //super.onCleared()
-        Log.i(TAG, "Destroy")
         getBreeds.dispose()
     }
 

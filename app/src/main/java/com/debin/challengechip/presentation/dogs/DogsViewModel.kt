@@ -27,15 +27,10 @@ open class DogsViewModel(private val getDogs: GetDogs,
     val savedBreedName : LiveData<String>
     get() = _savedBreedName
 
-
-
-
     init {
         progress.value = 8
         loadingError.value = ""
-        println(TAG + "init is called")
         _savedBreedName.value = ""
-        println("$TAG ::  saved breed name init :: ${_savedBreedName.value}")
     }
 
     companion object {
@@ -60,14 +55,12 @@ open class DogsViewModel(private val getDogs: GetDogs,
     private inner class DogsSubscriber : DisposableSingleObserver<Dog>() {
         override fun onSuccess(dog: Dog) {
             _dogs.value = Resource.Success(dog.message)
-            Log.i(TAG, "Success")
             progress.value = 8
         }
 
         override fun onError(e: Throwable) {
             _dogs.value = Resource.Error(e.message)
             loadingError.postValue(e.message)
-            Log.i(TAG, "Failure")
             progress.value = 8
         }
 
