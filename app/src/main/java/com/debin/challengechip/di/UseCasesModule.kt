@@ -1,7 +1,7 @@
 package com.debin.challengechip.di
 
 
-import com.challenger.domain.executor.JobExecutor
+import com.debin.challengechip.breeds.domain.executor.JobExecutor
 import com.debin.challengechip.breeds.interactors.GetBreeds
 import com.debin.challengechip.breeds.interactors.GetDogs
 import com.debin.challengechip.framework.executor.UiThread

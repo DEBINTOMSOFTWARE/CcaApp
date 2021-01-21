@@ -1,4 +1,4 @@
-package com.challenger.domain.executor
+package com.debin.challengechip.breeds.domain.executor
 
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.ThreadFactory
@@ -19,7 +19,8 @@ open class JobExecutor  constructor(): ThreadExecutor {
     init {
         this.workQueue = LinkedBlockingQueue()
         this.threadFactory = JobThreadFactory()
-        this.threadPoolExecutor = ThreadPoolExecutor(INITIAL_POOL_SIZE, MAX_POOL_SIZE,
+        this.threadPoolExecutor = ThreadPoolExecutor(
+            INITIAL_POOL_SIZE, MAX_POOL_SIZE,
                 KEEP_ALIVE_TIME.toLong(), KEEP_ALIVE_TIME_UNIT, this.workQueue, this.threadFactory)
     }
 

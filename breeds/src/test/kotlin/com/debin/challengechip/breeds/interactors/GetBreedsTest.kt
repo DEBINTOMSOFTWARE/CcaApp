@@ -1,7 +1,7 @@
 package com.debin.challengechip.breeds.interactors
 
-import com.challenger.domain.executor.PostExecutionThread
-import com.challenger.domain.executor.ThreadExecutor
+import com.debin.challengechip.breeds.domain.executor.PostExecutionThread
+import com.debin.challengechip.breeds.domain.executor.ThreadExecutor
 import com.debin.challengechip.breeds.domain.DogBreed
 import com.debin.challengechip.breeds.domain.repository.IBreedsRepository
 import com.debin.challengechip.breeds.utils.BreedFactory

@@ -5,8 +5,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import com.challenger.domain.executor.PostExecutionThread
-import com.challenger.domain.executor.ThreadExecutor
+import com.debin.challengechip.breeds.domain.executor.PostExecutionThread
+import com.debin.challengechip.breeds.domain.executor.ThreadExecutor
 
 
 /**

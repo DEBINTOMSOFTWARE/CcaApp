@@ -1,4 +1,4 @@
-package com.challenger.domain.executor
+package com.debin.challengechip.breeds.domain.executor
 
 import io.reactivex.Scheduler
 
