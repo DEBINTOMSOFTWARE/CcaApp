@@ -1,6 +1,7 @@
 package com.debin.challengechip.breeds.data.repository
 
 import com.debin.challengechip.breeds.data.datasource.IBreedsDataSource
+import com.debin.challengechip.breeds.data.mappers.dogbreedmapper.DogBreedEntityMapper
 import com.debin.challengechip.breeds.domain.DogBreed
 import com.debin.challengechip.breeds.utils.BreedFactory
 import com.nhaarman.mockito_kotlin.mock
@@ -19,15 +20,21 @@ class BreedsRepositoryTest {
 
     private lateinit var mockDataSource: IBreedsDataSource
     private lateinit var breedsRepository: BreedsRepository
+    private lateinit var entityMapper: DogBreedEntityMapper
 
     @Before
     fun setUp() {
         mockDataSource = mock()
-        breedsRepository = BreedsRepository(mockDataSource)
+        entityMapper = mock()
+        breedsRepository = BreedsRepository(mockDataSource, entityMapper)
     }
 
     @Test
     fun verifyGetBreedRepository_calls_getBreedAsync() {
+        val breeds = BreedFactory.makeBreedResponse()
+        val breedsEntity = BreedFactory.makeBreedResponseEntity()
+        Mockito.`when`(mockDataSource.getBreedsAsync()).thenReturn(Single.just(breedsEntity))
+        Mockito.`when`(entityMapper.mapFromRemote(breedsEntity)).thenReturn(breeds)
         breedsRepository.getBreeds()
         verify(mockDataSource).getBreedsAsync()
     }
@@ -35,7 +42,9 @@ class BreedsRepositoryTest {
     @Test
     fun getBreedRepositoryComplete_without_errors() {
         val breeds = BreedFactory.makeBreedResponse()
-        Mockito.`when`(mockDataSource.getBreedsAsync()).thenReturn(Single.just(breeds))
+        val breedsEntity = BreedFactory.makeBreedResponseEntity()
+        Mockito.`when`(mockDataSource.getBreedsAsync()).thenReturn(Single.just(breedsEntity))
+        Mockito.`when`(entityMapper.mapFromRemote(breedsEntity)).thenReturn(breeds)
         val testObserver = breedsRepository.getBreeds().toObservable().test()
         testObserver.assertComplete()
         testObserver.assertNoErrors()
@@ -53,7 +62,9 @@ class BreedsRepositoryTest {
     @Test
     fun getBreedRepository_returns_data() {
         val breeds = BreedFactory.makeBreedResponse()
-        Mockito.`when`(mockDataSource.getBreedsAsync()).thenReturn(Single.just(breeds))
+        val breedsEntity = BreedFactory.makeBreedResponseEntity()
+        Mockito.`when`(mockDataSource.getBreedsAsync()).thenReturn(Single.just(breedsEntity))
+        Mockito.`when`(entityMapper.mapFromRemote(breedsEntity)).thenReturn(breeds)
         val testObserver = breedsRepository.getBreeds().toObservable().test()
         testObserver.assertComplete()
         testObserver.assertNoErrors()

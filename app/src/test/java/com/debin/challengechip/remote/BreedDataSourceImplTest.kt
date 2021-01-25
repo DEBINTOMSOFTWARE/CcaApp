@@ -1,5 +1,6 @@
 package com.debin.challengechip.remote
 
+import com.debin.challengechip.breeds.data.model.DogBreedEntity
 import com.debin.challengechip.breeds.domain.Dog
 import com.debin.challengechip.breeds.domain.DogBreed
 import com.debin.challengechip.framework.network.ApiService
@@ -36,7 +37,7 @@ class BreedDataSourceImplTest {
 
     @Test
     fun getBreedRepositoryComplete_without_errors() {
-        val breed = BreedFactory.makeBreedResponse()
+        val breed = BreedFactory.makeBreedResponseEntity()
         stubWheneverThenReturn(Single.just(breed))
         val testObserver = breedsDataSourceImpl.getBreedsAsync().toObservable().test()
         testObserver.assertComplete()
@@ -54,7 +55,7 @@ class BreedDataSourceImplTest {
 
     @Test
     fun getBreedRepository_returns_data() {
-        val breed = BreedFactory.makeBreedResponse()
+        val breed = BreedFactory.makeBreedResponseEntity()
         stubWheneverThenReturn(Single.just(breed))
         val testObserver = breedsDataSourceImpl.getBreedsAsync().toObservable().test()
         testObserver.assertComplete()
@@ -63,7 +64,7 @@ class BreedDataSourceImplTest {
         testObserver.assertValue(breed)
     }
 
-    private fun stubWheneverThenReturn(single: Single<DogBreed>) {
+    private fun stubWheneverThenReturn(single: Single<DogBreedEntity>) {
         whenever(mockApiService.getBreeds()).thenReturn(single)
     }
 }

@@ -1,13 +1,17 @@
 package com.debin.challengechip.breeds.data.repository
 
 import com.debin.challengechip.breeds.data.datasource.IDogsDataSource
+import com.debin.challengechip.breeds.data.mappers.dogmapper.DogEntityMapper
 import com.debin.challengechip.breeds.domain.Dog
 import com.debin.challengechip.breeds.domain.repository.IDogsRepository
 import io.reactivex.Single
 
-class DogsRepository(private val dataSource: IDogsDataSource) : IDogsRepository {
+class DogsRepository(private val dataSource: IDogsDataSource,
+                     private val entityMapper: DogEntityMapper) : IDogsRepository {
     override fun getDogs(breedName: String?): Single<Dog> {
         return dataSource.getDogAsync(breedName).map {
+            entityMapper.mapFromRemote(it)
+        }.map {
             val list = it.message
             it.message = getRandomList(list)
             it

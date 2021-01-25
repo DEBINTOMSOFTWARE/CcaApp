@@ -1,5 +1,7 @@
 package com.debin.challengechip.framework.network
 
+import com.debin.challengechip.breeds.data.model.DogBreedEntity
+import com.debin.challengechip.breeds.data.model.DogEntity
 import com.debin.challengechip.breeds.domain.Dog
 import com.debin.challengechip.breeds.domain.DogBreed
 import com.debin.challengechip.framework.utils.GET_BREEDS
@@ -10,8 +12,8 @@ import retrofit2.http.Path
 
 interface ApiService {
  @GET(GET_BREEDS)
- fun getBreeds() : Single<DogBreed>
+ fun getBreeds() : Single<DogBreedEntity>
 
  @GET("$URL_DOG/{breedName}/images")
- fun getDogs(@Path("breedName") breedName : String?) : Single<Dog>
+ fun getDogs(@Path("breedName") breedName : String?) : Single<DogEntity>
 }

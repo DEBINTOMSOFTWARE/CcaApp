@@ -9,6 +9,7 @@ class ChipApp : Application() {
     private val modules = listOf(
         apiModule,
         dataSourceModule,
+        mapperModule,
         repositoryModule,
         useCasesModule,
         viewModelModule

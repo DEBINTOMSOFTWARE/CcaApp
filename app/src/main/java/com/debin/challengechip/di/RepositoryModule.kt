@@ -7,6 +7,6 @@ import com.debin.challengechip.breeds.domain.repository.IDogsRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<IBreedsRepository> { BreedsRepository(get()) }
-    single<IDogsRepository> { DogsRepository(get()) }
+    single<IBreedsRepository> { BreedsRepository(get(), get()) }
+    single<IDogsRepository> { DogsRepository(get(), get()) }
 }

@@ -1,6 +1,7 @@
 package com.debin.challengechip.breeds.data.repository
 
 import com.debin.challengechip.breeds.data.datasource.IDogsDataSource
+import com.debin.challengechip.breeds.data.mappers.dogmapper.DogEntityMapper
 import com.debin.challengechip.breeds.utils.BreedFactory
 import com.debin.challengechip.breeds.utils.DataFactory
 import com.nhaarman.mockito_kotlin.any
@@ -18,17 +19,21 @@ class DogsRepositoryTest {
 
     private lateinit var mockDataSource: IDogsDataSource
     private lateinit var dogsRepository: DogsRepository
+    private lateinit var entityMapper: DogEntityMapper
 
     @Before
     fun setUp() {
         mockDataSource = mock()
-        dogsRepository = DogsRepository(mockDataSource)
+        entityMapper = mock()
+        dogsRepository = DogsRepository(mockDataSource, entityMapper)
     }
 
     @Test
     fun verifyGetDogsRepository_calls_getBreedAsync() {
         val dogResponse = BreedFactory.makeDogResponse()
-        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogResponse))
+        val dogEntity = BreedFactory.makeDogResponseEntity()
+        Mockito.`when`(entityMapper.mapFromRemote(dogEntity)).thenReturn(dogResponse)
+        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogEntity))
         dogsRepository.getDogs(DataFactory.getBreedName()).test()
         verify(mockDataSource).getDogAsync(any())
 
@@ -37,7 +42,9 @@ class DogsRepositoryTest {
     @Test
     fun getDogsRepositoryComplete_without_errors() {
         val dogResponse = BreedFactory.makeDogResponse()
-        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogResponse))
+        val dogEntity = BreedFactory.makeDogResponseEntity()
+        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogEntity))
+        Mockito.`when`(entityMapper.mapFromRemote(dogEntity)).thenReturn(dogResponse)
         val testOfServer = dogsRepository.getDogs(DataFactory.getBreedName()).toObservable().test()
         testOfServer.assertComplete()
         testOfServer.assertNoErrors()
@@ -55,7 +62,9 @@ class DogsRepositoryTest {
     @Test
     fun getDogsRepository_returns_data() {
         val dogResponse = BreedFactory.makeDogResponse()
-        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogResponse))
+        val dogEntity = BreedFactory.makeDogResponseEntity()
+        Mockito.`when`(mockDataSource.getDogAsync(any())).thenReturn(Single.just(dogEntity))
+        Mockito.`when`(entityMapper.mapFromRemote(dogEntity)).thenReturn(dogResponse)
         val testOfServer = dogsRepository.getDogs(DataFactory.getBreedName()).toObservable().test()
         testOfServer.assertComplete()
         testOfServer.assertNoErrors()
